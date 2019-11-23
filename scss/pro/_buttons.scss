@@ -1,9 +1,10 @@
 // Buttons
 .btn {
   &.btn-flat {
-    box-shadow: none;
+    font-weight: 500;
+    color: inherit;
     background-color: transparent;
-    color: inherit !important;
+    box-shadow: none;
     &:not([disabled]):not(.disabled):active {
       box-shadow: none;
     }
@@ -12,23 +13,23 @@
 
 // Floating button
 .btn-floating {
-  box-shadow: $z-depth-1-half;
-  @include make-btn-floating($btn-floating-width, $btn-floating-height, $btn-floating-icon-size, $btn-floating-line-height);
   position: relative;
   z-index: 1;
-  vertical-align: middle;
   display: inline-block;
-  overflow: hidden;
-  transition: $btn-floating-transtion;
-  margin: $btn-floating-margin;
-  border-radius: $btn-floating-border-radius;
   padding: 0;
+  margin: $btn-floating-margin;
+  overflow: hidden;
+  vertical-align: middle;
   cursor: pointer;
+  border-radius: $btn-floating-border-radius;
+  box-shadow: $z-depth-1-half;
+  transition: $btn-floating-transtion;
+  @include make-btn-floating($btn-floating-width, $btn-floating-height, $btn-floating-icon-size, $btn-floating-line-height);
   i {
     display: inline-block;
     width: inherit;
-    text-align: center;
     color: $white-base;
+    text-align: center;
   }
   &:hover {
     box-shadow: $z-depth-2;
@@ -47,29 +48,47 @@
 // Fixed action button
 .fixed-action-btn {
   position: fixed;
-  z-index: 998;
   right: $fixed-action-btn-right;
   bottom: $fixed-action-btn-bottom;
-  margin-bottom: 0;
+  z-index: 998;
   padding-top: $fixed-action-btn-padding-top;
+  margin-bottom: 0;
   ul {
     position: absolute;
+    right: 0;
     bottom: $fixed-action-btn-ul-bottom;
     left: 0;
-    right: 0;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: $fixed-action-btn-ul-bottom;
     padding: 0;
+    margin: 0 0 15px;
     text-align: center;
+    transition: 400ms height;
     li {
+      z-index: 0;
+      display: flex;
+      margin-right: auto;
       margin-bottom: $fixed-action-btn-li-margin-bottom;
+      margin-left: auto;
     }
     a {
       &.btn-floating {
         opacity: 0;
+        transition-duration: .4s;
+        transform: scale(.4) translate(0);
+        &.shown {
+          opacity: 1;
+          transform: scale(1) translate(0);
+        }
       }
     }
   }
+  &.active ul {
+    height: 300px;
+  }
 }
+
 button, html [type="button"], [type="reset"], [type="submit"] {
   appearance: none;
 }
@@ -77,9 +96,4 @@ button, html [type="button"], [type="reset"], [type="submit"] {
 // Rounded buttons
 .btn-rounded {
   border-radius: $btn-rounded-border-radius;
-}
-
-// Gradient buttons
-@each $name, $val in $gradients-premium {
-  @include make-gradient-button($name, $val);
 }
